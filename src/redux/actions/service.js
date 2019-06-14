@@ -1,4 +1,4 @@
-import config from "config/config";
+import config from "../../config/config";
 const goodResponses = [200, 201, 204];
 
 export default class Service {

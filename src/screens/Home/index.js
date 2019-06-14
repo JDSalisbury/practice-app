@@ -1,20 +1,28 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { searchCardByName } from "../../redux/actions/mtg.action";
 
-const Home = ({}) => {
+const Home = ({ mtg, searchCardByName }) => {
   const [name, setName] = useState("");
-  const [cardImage, setCardImage] = useState("");
-  const mtg = require("mtgsdk");
+  // const [foundCard, setCard] = useState("");
+
   const handleSubmit = () => {
-    console.log("Submitted", name);
+    const mtg = require("mtgsdk");
     mtg.card
-      .all({
+      .where({
         name: name
       })
-      .on("data", card => {
-        setCardImage(card);
-        console.log(card);
+      .then(cards => {
+        if (cards !== "") {
+          // setCard(card);
+          searchCardByName(cards);
+        }
       });
   };
+
+  // console.log(mtg.card);
+  const { cards } = mtg;
+
   return (
     <>
       <form
@@ -30,10 +38,28 @@ const Home = ({}) => {
         />
         <input type="button" value="submit" />
       </form>
-      {cardImage.name}
-      <img src={cardImage.imageUrl} alt="" />
+      {cards.map(card => {
+        return (
+          <>
+            <div>
+              {card.imageUrl ? (
+                <>
+                  <div>{card.name}</div>
+                  <img src={card.imageUrl} alt="" />
+                  <div>{card.text}</div>
+                </>
+              ) : (
+                ""
+              )}
+            </div>
+          </>
+        );
+      })}
     </>
   );
 };
 
-export default Home;
+export default connect(
+  ({ mtg }) => ({ mtg }),
+  { searchCardByName }
+)(Home);
