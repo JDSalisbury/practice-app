@@ -4,7 +4,6 @@ import { searchCardByName } from "../../redux/actions/mtg.action";
 
 const Home = ({ mtg, searchCardByName }) => {
   const [name, setName] = useState("");
-  // const [foundCard, setCard] = useState("");
 
   const handleSubmit = () => {
     const mtg = require("mtgsdk");
@@ -14,15 +13,12 @@ const Home = ({ mtg, searchCardByName }) => {
       })
       .then(cards => {
         if (cards !== "") {
-          // setCard(card);
           searchCardByName(cards);
         }
       });
   };
 
-  // console.log(mtg.card);
   const { cards } = mtg;
-
   return (
     <>
       <form
