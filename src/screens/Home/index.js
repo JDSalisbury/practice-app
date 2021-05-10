@@ -19,6 +19,7 @@ const Home = ({ mtg, searchCardByName }) => {
   };
 
   const { cards } = mtg;
+  console.log(cards);
   return (
     <>
       <form
@@ -37,12 +38,12 @@ const Home = ({ mtg, searchCardByName }) => {
       {cards.map(card => {
         return (
           <>
-            <div>
+            <div key={card.name + "1"}>
               {card.imageUrl ? (
                 <>
-                  <div>{card.name}</div>
-                  <img src={card.imageUrl} alt="" />
-                  <div>{card.text}</div>
+                  <div key={card.name + "2"}>{card.name}</div>
+                  <img key={card.name + "3"} src={card.imageUrl} alt="" />
+                  <div key={card.name + "4"}>{card.text}</div>
                 </>
               ) : (
                 ""
